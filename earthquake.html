@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-US">
-
-<head>
+ <head>
     <meta charset="utf-8">
     <title>Earthquake List</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
@@ -50,15 +49,14 @@
             background-color: #f2f2f2;
         }
     </style>
-</head>
-
-<body>
+ </head>
+ <body>
     <main id="container">
         <div id="side-panel">
-
+ 
             <h2>Earthquake List</h2>
             <button>Sort by Magnitude</button>
-
+ 
             <table>
                 <tr>
                     <th>id</th>
@@ -66,17 +64,13 @@
                     <th>timestamp</th>
                 </tr>
             </table>
-
+ 
         </div>
         <div id="map"></div>
-
     </main>
     <script>
-        // define the mapbox access token
-        mapboxgl.accessToken =
-            'pk.eyJ1IjoiamFrb2J6aGFvIiwiYSI6ImNpcms2YWsyMzAwMmtmbG5icTFxZ3ZkdncifQ.P9MBej1xacybKcDN_jehvw';
+        mapboxgl.accessToken = 'pk.eyJ1IjoiejEyMjc5NCIsImEiOiJjbGFnMXYzcXQxN3FkM3BxdDdpNzhzbTk3In0.4jbtZv8A8q_C8Iq3Uj8zIw';
 
-        // define the map object
         let map = new mapboxgl.Map({
             container: 'map', // container ID
             style: 'mapbox://styles/mapbox/satellite-v9', // style URL
@@ -84,16 +78,13 @@
             center: [138, 38] // starting center
         });
 
-
-
         async function geojsonFetch() {
-
             let response, earthquakes, japan, table;
             response = await fetch('assets/earthquakes.geojson');
             earthquakes = await response.json();
             response = await fetch('assets/japan.json');
             japan = await response.json();
-
+            
             table = document.getElementsByTagName("table")[0];
             let row, cell1, cell2, cell3;
             for (let i = 0; i < earthquakes.features.length; i++) {
@@ -108,45 +99,42 @@
                     "en-US");
             }
 
-
-            //load data to the map as new layers and table on the side.
             map.on('load', function loadingData() {
 
-                map.addSource('earthquakes', {
-                    type: 'geojson',
-                    data: earthquakes
-                });
-
-                map.addLayer({
-                    'id': 'earthquakes-layer',
-                    'type': 'circle',
-                    'source': 'earthquakes',
-                    'paint': {
-                        'circle-radius': 8,
-                        'circle-stroke-width': 2,
-                        'circle-color': 'red',
-                        'circle-stroke-color': 'white'
-                    }
-                });
-
-
-                map.addSource('japan', {
-                    type: 'geojson',
-                    data: japan
-                });
-
-                map.addLayer({
-                    'id': 'japan-layer',
-                    'type': 'fill',
-                    'source': 'japan',
-                    'paint': {
-                        'fill-color': '#0080ff', // blue color fill
-                        'fill-opacity': 0.5
-                    }
-                });
-
+            map.addSource('earthquakes', {
+                type: 'geojson',
+                data: earthquakes
             });
 
+            map.addLayer({
+                'id': 'earthquakes-layer',
+                'type': 'circle',
+                'source': 'earthquakes',
+                'paint': {
+                    'circle-radius': 8,
+                    'circle-stroke-width': 2,
+                    'circle-color': 'red',
+                    'circle-stroke-color': 'white'
+                }
+            });
+
+
+            map.addSource('japan', {
+                type: 'geojson',
+                data: japan
+            });
+
+            map.addLayer({
+                'id': 'japan-layer',
+                'type': 'fill',
+                'source': 'japan',
+                'paint': {
+                    'fill-color': '#0080ff', // blue color fill
+                    'fill-opacity': 0.5
+                }
+            });
+
+            });
         }
 
         geojsonFetch();
@@ -155,7 +143,6 @@
 
         btn.addEventListener('click', sortTable);
 
-        // define the function to sort table
         function sortTable(e) {
             let table, rows, switching, i, x, y, shouldSwitch;
             table = document.getElementsByTagName("table")[0];
@@ -191,7 +178,5 @@
             }
         }
     </script>
-
-</body>
-
-</html>
+ </body>   
+<html>   
