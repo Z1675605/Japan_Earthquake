@@ -20,7 +20,8 @@
         }
 
         #side-panel {
-            position: relative;
+            flex-grow: 1;
+            float: right;
             bottom: auto;
             right: 0;
             top: 1;
@@ -33,6 +34,7 @@
 
         #map {
             flex-grow: 1;
+            float: left;
             top: 0;
             bottom: 0;
             width: 100%;
@@ -51,7 +53,7 @@
 
         th,
         td {
-            text-align: left;
+            text-align: center;
             padding: 16px;
         }
 
@@ -68,19 +70,17 @@
  </head>
  <body>
     <main id="container">
-        <div id="map"></div>
         <div id="side-panel">
             <h3>List of Airports in the United States and total Enplanements</h3>
             <button>Sort by Enplanements</button>
-    
             <table>
                 <tr>
                     <th>Airport ID</th>
                     <th>Total Enplanements</th>
                 </tr>
             </table>
-    
         </div>
+        <div id="map"></div>
     </main>
     <script>
         mapboxgl.accessToken = 'pk.eyJ1IjoiejEyMjc5NCIsImEiOiJjbGFnMXYzcXQxN3FkM3BxdDdpNzhzbTk3In0.4jbtZv8A8q_C8Iq3Uj8zIw';
@@ -102,7 +102,6 @@
             table = document.getElementsByTagName("table")[0];
             let row, cell1, cell2;
             for (let i = 0; i < airports.features.length; i++) {
-                // Create an empty <tr> element and add it to the 1st position of the table:
                 row = table.insertRow(-1);
                 cell1 = row.insertCell(0);
                 cell2 = row.insertCell(1);
@@ -171,8 +170,8 @@
                 rows = table.rows;
                 for (i = 1; i < (rows.length - 1); i++) {
                     shouldSwitch = false;
-                    x = parseFloat(rows[i].getElementsByTagName("td")[1].innerHTML);
-                    y = parseFloat(rows[i + 1].getElementsByTagName("td")[1].innerHTML);
+                    x = parseInt(rows[i].getElementsByTagName("td")[1].innerHTML);
+                    y = parseInt(rows[i + 1].getElementsByTagName("td")[1].innerHTML);
                     if (x < y) {
                         shouldSwitch = true;
                         break;
